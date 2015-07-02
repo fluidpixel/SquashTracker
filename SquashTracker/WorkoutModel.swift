@@ -30,9 +30,9 @@ class Workouts {
         let workout = HKWorkoutType.workoutType()
         
         let dataTypesToRead: Set<HKSampleType> = [heartRate, stepCount, distance,workout]
-//        let dataTypesToWrite = NSSet(object: stepsCount)
+        let dataTypesToWrite: Set<HKSampleType> = [workout]
         
-        healthStore?.requestAuthorizationToShareTypes(nil,
+        healthStore?.requestAuthorizationToShareTypes(dataTypesToWrite,
             readTypes: dataTypesToRead,
             completion: {succeeded, error in
                 
@@ -103,6 +103,32 @@ class Workouts {
             }
         }
         healthStore?.executeQuery(statsQuery)
+    }
+    
+    func removeWorkout(workout:HKWorkout, completion:(Bool, NSError?) -> Void) {
+        if workout.sourceRevision.source.name == "SquashTracker" {
+            self.healthStore?.deleteObject(workout, withCompletion: completion)
+        } else {
+             completion(false, NSError(domain: "SquashTracker", code: 101, userInfo: ["error" : "Data belongs to \(workout.sourceRevision.source.name) App"]))
+        }
+    }
+    
+    func changeWorkoutType(workout:HKWorkout, newType:HKWorkoutActivityType, completion:(Bool, NSError?) -> Void) {
+        
+        let newWorkout = HKWorkout(activityType: newType, startDate: workout.startDate, endDate:workout.endDate, workoutEvents: workout.workoutEvents, totalEnergyBurned: workout.totalEnergyBurned, totalDistance: workout.totalDistance, device: workout.device, metadata: nil)
+        
+        healthStore?.saveObject(newWorkout, withCompletion: { (success:Bool, error:NSError?) -> Void in
+            if success {
+                if workout.sourceRevision.source.name == "SquashTracker" {
+                    self.removeWorkout(workout, completion: completion)
+                } else {
+                    completion(false, NSError(domain: "SquashTracker", code: 101, userInfo: ["error" : "Data belongs to \(workout.sourceRevision.source.name) App"]))
+                }
+            } else {
+                completion(success, error)
+            }
+        })
+        
     }
     
     func detailForWorkout(workout:HKWorkout, type:String, completion:(result:[Double]) -> Void) {

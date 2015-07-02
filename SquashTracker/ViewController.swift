@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var heartRateLabel: UILabel!
     
+    @IBOutlet weak var EditButton: UIBarButtonItem!
     @IBOutlet weak var chartScrollView: UIScrollView! {
         didSet {
             chartScrollView.delegate = self
@@ -37,9 +38,53 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if latestWorkout?.sourceRevision.source.name == "SquashTracker" {
+            EditButton.title = "Delete"
+            EditButton.tintColor = UIColor.redColor()
+        } else {
+            EditButton.title = "Edit"
+            EditButton.tintColor = self.view.tintColor
+        }
+        
             updateWorkout()
     }
 
+    @IBAction func editAction(sender: UIBarButtonItem) {
+        if latestWorkout?.workoutActivityType != HKWorkoutActivityType.Squash {
+            
+            Workouts().changeWorkoutType(latestWorkout!, newType: HKWorkoutActivityType.Squash)  {(success:Bool, error:NSError?)  in
+                if success {
+                    print("removed")
+                } else {
+                    print(error?.localizedDescription)
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Remove Workout?", message: "This will perminately delete this squash match", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: {(alert:UIAlertAction) in
+                
+                Workouts().removeWorkout(self.latestWorkout!) {(success:Bool, error:NSError?)  in
+                        if success {
+                            print("removed")
+                            dispatch_async(dispatch_get_main_queue(), {
+                             self.navigationController?.popViewControllerAnimated(true)
+                            })
+                            
+                        } else {
+                            print(error?.localizedDescription)
+                        }
+                    }
+                }))
+                
+            alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            presentViewController(alert, animated:true, completion: nil)
+            
+        }
+        
+    }
+    
     @IBAction func pageChanged(sender: UIPageControl) {
         let offset = CGFloat(pageControl.currentPage) * chartScrollView.frame.size.width
         chartScrollView.setContentOffset(CGPointMake(offset, 0), animated: true)

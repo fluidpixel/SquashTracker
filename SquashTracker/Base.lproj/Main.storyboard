@@ -87,8 +87,15 @@
                             <constraint firstItem="spV-py-DWr" firstAttribute="centerX" secondItem="NDm-6l-609" secondAttribute="centerX" id="xYL-4D-gp1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="kg4-je-4KP"/>
+                    <navigationItem key="navigationItem" id="kg4-je-4KP">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="85Z-Sn-2HA">
+                            <connections>
+                                <action selector="editAction:" destination="BYZ-38-t0r" id="erp-fZ-YRE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="EditButton" destination="85Z-Sn-2HA" id="Veq-Ai-HiT"/>
                         <outlet property="caloriesBurned" destination="7tI-zP-6td" id="gGQ-wz-guo"/>
                         <outlet property="chartScrollView" destination="XSf-Wp-HDD" id="fqQ-Og-p1k"/>
                         <outlet property="chartView" destination="IfK-g3-ROY" id="GGZ-SB-zLB"/>

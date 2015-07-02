@@ -17,6 +17,9 @@ class WorkoutTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+
+    override func viewWillAppear(animated: Bool) {
         Workouts().readOtherWorkOuts { (results, error) -> Void in
             
             self.workouts = results
@@ -50,7 +53,12 @@ class WorkoutTableViewController: UITableViewController {
         formatter.dateStyle = NSDateFormatterStyle.ShortStyle
         formatter.timeStyle = NSDateFormatterStyle.ShortStyle
         
-        cell.textLabel?.text = "\(formatter.stringFromDate(workout.startDate))"
+        if workout.workoutActivityType == HKWorkoutActivityType.Squash {
+            cell.textLabel?.text = "\(formatter.stringFromDate(workout.startDate)) SQUASH"
+        } else {
+            cell.textLabel?.text = "\(formatter.stringFromDate(workout.startDate))"
+        }
+        
         cell.detailTextLabel?.text = "\(Int(workout.duration/60)) minutes"
         
         return cell
