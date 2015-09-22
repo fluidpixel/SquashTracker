@@ -105,6 +105,44 @@ class Workouts {
         healthStore?.executeQuery(statsQuery)
     }
     
+    func heartRateForWorkout (workout:HKWorkout, completion: (average: Double, min:Double, max:Double) -> Void) {
+        
+        let heartRate = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!
+        let predicate = HKQuery.predicateForSamplesWithStartDate(workout.startDate, endDate: workout.endDate, options: [HKQueryOptions.StrictStartDate, HKQueryOptions.StrictEndDate])
+        
+        let statsQuery = HKStatisticsQuery(quantityType: heartRate, quantitySamplePredicate: predicate, options: [HKStatisticsOptions.DiscreteMin, HKStatisticsOptions.DiscreteMax, HKStatisticsOptions.DiscreteAverage]) {(query:HKStatisticsQuery, statistics:HKStatistics?, error:NSError?) -> Void in
+            if error != nil {
+                print(error)
+            }
+            
+            let average:Double
+            let max:Double
+            let min:Double
+            
+            if let value = statistics?.averageQuantity() {
+                    average = value.doubleValueForUnit(HKUnit(fromString: "count/min"))
+            } else {
+                average = 0
+            }
+            
+            if let value = statistics?.maximumQuantity() {
+                    max = value.doubleValueForUnit(HKUnit(fromString: "count/min"))
+            } else {
+                max = 0
+            }
+            
+            if let value = statistics?.minimumQuantity() {
+                    min = value.doubleValueForUnit(HKUnit(fromString: "count/min"))
+            } else {
+                min = 0
+            }
+            
+            completion(average: average, min: min, max: max)
+            
+        }
+        healthStore?.executeQuery(statsQuery)
+    }
+    
     func removeWorkout(workout:HKWorkout, completion:(Bool, NSError?) -> Void) {
         if workout.sourceRevision.source.name == "SquashTracker" {
             self.healthStore?.deleteObject(workout, withCompletion: completion)

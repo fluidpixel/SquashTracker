@@ -28,7 +28,7 @@ public class Chart {
     
     public let view: ChartBaseView
 
-    private let layers: [ChartLayer]
+    public let layers: [ChartLayer]
 
     convenience public init(frame: CGRect, layers: [ChartLayer]) {
         self.init(view: ChartBaseView(frame: frame), layers: layers)
@@ -71,7 +71,7 @@ public class Chart {
     private func drawRect(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         for layer in self.layers {
-            layer.chartViewDrawing(context: context, chart: self)
+            layer.chartViewDrawing(context: context!, chart: self)
         }
     }
 }
@@ -85,7 +85,7 @@ public class ChartBaseView: UIView {
         self.sharedInit()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.sharedInit()
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TJC-sq-RIy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TJC-sq-RIy">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,42 +17,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDm-6l-609">
-                                <rect key="frame" x="260" y="72" width="80" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calories Burned" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tI-zP-6td">
-                                <rect key="frame" x="240" y="129" width="123" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spV-py-DWr">
-                                <rect key="frame" x="274" y="101" width="54" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpk-mj-vu7">
-                                <rect key="frame" x="278" y="158" width="44" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heart Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXq-Hc-mDo">
-                                <rect key="frame" x="259" y="186" width="82" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1iR-Ob-YZ8">
+                                <rect key="frame" x="151" y="72" width="298.5" height="163"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDm-6l-609">
+                                        <rect key="frame" x="109.5" y="0.0" width="80" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spV-py-DWr">
+                                        <rect key="frame" x="122.5" y="28.5" width="53.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Calories Burned" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tI-zP-6td">
+                                        <rect key="frame" x="88" y="57" width="122.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpk-mj-vu7">
+                                        <rect key="frame" x="127.5" y="85.5" width="44" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heart Rate (BPM)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhK-WO-VvU">
+                                        <rect key="frame" x="82.5" y="114" width="133.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="05j-wR-sGi">
+                                        <rect key="frame" x="0.0" y="142.5" width="298.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min: 000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1U-iw-qSl" userLabel="Min">
+                                                <rect key="frame" x="0.0" y="0.0" width="68" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average: 000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXq-Hc-mDo">
+                                                <rect key="frame" x="98" y="0.0" width="102.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max:000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0es-0N-Pc4">
+                                                <rect key="frame" x="230.5" y="0.0" width="68" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IfK-g3-ROY">
-                                <rect key="frame" x="0.0" y="215" width="600" height="351"/>
+                                <rect key="frame" x="0.0" y="243" width="600" height="332"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XSf-Wp-HDD">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="332"/>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="XSf-Wp-HDD" firstAttribute="leading" secondItem="IfK-g3-ROY" secondAttribute="leading" id="1df-vf-8Jd"/>
+                                    <constraint firstItem="XSf-Wp-HDD" firstAttribute="top" secondItem="IfK-g3-ROY" secondAttribute="top" id="5Xc-Mc-Vd9"/>
+                                    <constraint firstAttribute="trailing" secondItem="XSf-Wp-HDD" secondAttribute="trailing" id="Ggp-cs-M5q"/>
+                                    <constraint firstAttribute="bottom" secondItem="XSf-Wp-HDD" secondAttribute="bottom" id="vQ6-GT-wvc"/>
+                                </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XSf-Wp-HDD">
-                                <rect key="frame" x="0.0" y="215" width="600" height="351"/>
-                            </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="4YF-fD-rQV">
                                 <rect key="frame" x="289" y="563" width="23" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
@@ -64,28 +100,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="IfK-g3-ROY" secondAttribute="bottom" constant="35" id="1nM-2a-nP1"/>
-                            <constraint firstItem="NDm-6l-609" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="6QE-WD-j0z"/>
+                            <constraint firstAttribute="bottom" secondItem="IfK-g3-ROY" secondAttribute="bottom" constant="25" id="1nM-2a-nP1"/>
                             <constraint firstItem="IfK-g3-ROY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6cS-de-co8"/>
-                            <constraint firstItem="IfK-g3-ROY" firstAttribute="top" secondItem="HXq-Hc-mDo" secondAttribute="bottom" constant="8" symbolic="YES" id="8Lk-VF-9p3"/>
-                            <constraint firstItem="7tI-zP-6td" firstAttribute="centerX" secondItem="gpk-mj-vu7" secondAttribute="centerX" id="DKd-9F-YMz"/>
-                            <constraint firstItem="HXq-Hc-mDo" firstAttribute="top" secondItem="gpk-mj-vu7" secondAttribute="bottom" constant="8" symbolic="YES" id="IaW-m4-yt1"/>
-                            <constraint firstItem="spV-py-DWr" firstAttribute="top" secondItem="NDm-6l-609" secondAttribute="bottom" constant="8" symbolic="YES" id="OOl-zb-o5f"/>
-                            <constraint firstAttribute="leading" secondItem="XSf-Wp-HDD" secondAttribute="leading" id="Qfo-7e-foi"/>
+                            <constraint firstItem="1iR-Ob-YZ8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="R9F-K1-JMY"/>
                             <constraint firstAttribute="trailing" secondItem="IfK-g3-ROY" secondAttribute="trailing" id="Vbf-pC-EIH"/>
-                            <constraint firstItem="gpk-mj-vu7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ye9-XZ-FSV"/>
-                            <constraint firstItem="HXq-Hc-mDo" firstAttribute="centerX" secondItem="gpk-mj-vu7" secondAttribute="centerX" id="c7h-Su-Lp1"/>
-                            <constraint firstItem="7tI-zP-6td" firstAttribute="centerX" secondItem="spV-py-DWr" secondAttribute="centerX" id="cK5-qA-jgN"/>
                             <constraint firstAttribute="bottomMargin" secondItem="4YF-fD-rQV" secondAttribute="bottom" id="dgR-Lr-WGX"/>
-                            <constraint firstAttribute="trailing" secondItem="XSf-Wp-HDD" secondAttribute="trailing" id="eCL-xJ-W0M"/>
                             <constraint firstItem="4YF-fD-rQV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gL8-3L-WFj"/>
-                            <constraint firstItem="XSf-Wp-HDD" firstAttribute="top" secondItem="HXq-Hc-mDo" secondAttribute="bottom" constant="8" id="gLx-tb-6Zp"/>
-                            <constraint firstItem="IfK-g3-ROY" firstAttribute="top" secondItem="HXq-Hc-mDo" secondAttribute="bottom" constant="8" id="oX5-Ii-L5f"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="XSf-Wp-HDD" secondAttribute="bottom" constant="35" id="qyx-5t-jeL"/>
-                            <constraint firstItem="gpk-mj-vu7" firstAttribute="top" secondItem="7tI-zP-6td" secondAttribute="bottom" constant="8" symbolic="YES" id="uW0-fu-nxY"/>
-                            <constraint firstItem="7tI-zP-6td" firstAttribute="top" secondItem="spV-py-DWr" secondAttribute="bottom" constant="8" symbolic="YES" id="wAp-4i-H8z"/>
-                            <constraint firstItem="spV-py-DWr" firstAttribute="centerX" secondItem="NDm-6l-609" secondAttribute="centerX" id="xYL-4D-gp1"/>
+                            <constraint firstItem="1iR-Ob-YZ8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kPp-R6-Xje"/>
+                            <constraint firstItem="IfK-g3-ROY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" priority="750" constant="8" symbolic="YES" id="tNl-zK-JQH"/>
+                            <constraint firstItem="IfK-g3-ROY" firstAttribute="top" secondItem="1iR-Ob-YZ8" secondAttribute="bottom" priority="750" constant="8" symbolic="YES" id="zRi-MU-j1U"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="tNl-zK-JQH"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="subviews">
+                                <exclude reference="1iR-Ob-YZ8"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="tNl-zK-JQH"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="kg4-je-4KP">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="85Z-Sn-2HA">
@@ -101,6 +138,8 @@
                         <outlet property="chartView" destination="IfK-g3-ROY" id="GGZ-SB-zLB"/>
                         <outlet property="heartRateLabel" destination="HXq-Hc-mDo" id="jtC-Ro-orJ"/>
                         <outlet property="lengthLabel" destination="spV-py-DWr" id="EJW-aM-BYV"/>
+                        <outlet property="maxHeartRateLabel" destination="0es-0N-Pc4" id="dSQ-ss-zcg"/>
+                        <outlet property="minHeartRateLabel" destination="F1U-iw-qSl" id="GYG-fg-e5k"/>
                         <outlet property="pageControl" destination="4YF-fD-rQV" id="8VW-BS-Wig"/>
                         <outlet property="startTimeLabel" destination="NDm-6l-609" id="geO-mr-ZKD"/>
                         <outlet property="stepsLabel" destination="gpk-mj-vu7" id="EUd-wW-3MF"/>
@@ -134,7 +173,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0I5-4Y-Dni">
-                                            <rect key="frame" x="15" y="45.5" width="41" height="13.5"/>
+                                            <rect key="frame" x="15" y="45.5" width="40.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

@@ -16,6 +16,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var caloriesBurned: UILabel!
     @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var heartRateLabel: UILabel!
+    @IBOutlet weak var minHeartRateLabel: UILabel!
+    @IBOutlet weak var maxHeartRateLabel: UILabel!
     
     @IBOutlet weak var EditButton: UIBarButtonItem!
     @IBOutlet weak var chartScrollView: UIScrollView! {
@@ -25,8 +27,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBOutlet weak var chartView: UIView!
-    private var charts: [Chart]? // arc
+    private var charts = [Chart]() // arc
     private var chart: Chart? // arc
+    private var data = [(dataPoints:[Double], type:String, duration:NSTimeInterval)]()
     
     @IBOutlet weak var pageControl: UIPageControl! {
         didSet {
@@ -92,7 +95,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let pageNumber = (chartScrollView.contentOffset.x / chartScrollView.frame.size.width)
-        
         pageControl.currentPage = Int(pageNumber)
     }
     
@@ -105,19 +107,21 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                     self.stepsLabel.text = "\(Int(result)) steps"
                 })
             }
-            
-            Workouts().averageHeartRateForWorkout(workout)  {
-                (result: Double) in
+
+            Workouts().heartRateForWorkout(workout, completion: { (average, min, max) -> Void in
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.heartRateLabel.text = "\(Int(result)) Average BPM"
+                    self.heartRateLabel.text = "Average: \(Int(average))"
+                    self.minHeartRateLabel.text = "Min: \(Int(min))"
+                    self.maxHeartRateLabel.text = "Max: \(Int(max))"
                 })
-            }
+            })
             
             Workouts().detailForWorkout(workout, type: HKQuantityTypeIdentifierStepCount)  {(result: [Double]) in
                 if result.count > 0 {
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.addChartView(result, offset:self.pageControl.numberOfPages)
-                        self.pageControl.numberOfPages += 1
+                        self.pageControl.numberOfPages++
+                        self.data.append((result, type:HKQuantityTypeIdentifierStepCount, duration:workout.duration/60))
+                        self.addChartView(result, type:HKQuantityTypeIdentifierStepCount, duration:workout.duration/60)
                     })
                     
                 }
@@ -126,8 +130,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             Workouts().detailForWorkout(workout, type: HKQuantityTypeIdentifierHeartRate)  {(result: [Double]) in
                 if result.count > 0 {
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.addChartView(result, offset:self.pageControl.numberOfPages)
-                        self.pageControl.numberOfPages += 1
+                        self.pageControl.numberOfPages++
+                        self.data.append((result, type:HKQuantityTypeIdentifierHeartRate, duration:workout.duration/60))
+                        self.addChartView(result, type:HKQuantityTypeIdentifierHeartRate, duration:workout.duration/60)
                     })
                     
                 }
@@ -143,35 +148,42 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func addChartView(dataPoints:[Double], offset:Int){
+    func addChartView(dataPoints:[Double], type:String, duration:NSTimeInterval){
         // map model data to chart points
         
         var chartPoints = [ChartPoint]()
         
         var maxValue = 0
         
-        for (index, step) in dataPoints.enumerate() {
+        let xInterval = duration/Double(dataPoints.count)
+        
+        for (index, data) in dataPoints.enumerate() {
             
-            if Int(step) > maxValue {
-                maxValue = Int(step)
+            if Int(data) > maxValue {
+                maxValue = Int(data)
             }
             
-            chartPoints.append(ChartPoint(x: ChartAxisValue(scalar: CGFloat(index+1)), y: ChartAxisValue(scalar: CGFloat(step))))
+            chartPoints.append(ChartPoint(x: ChartAxisValue(scalar: CGFloat(xInterval*Double(index))), y: ChartAxisValue(scalar: CGFloat(data))))
         }
         
         let labelSettings = ChartLabelSettings(font: ExamplesDefaults.labelFont)
+       
+        let interval = Int(maxValue / 10)
+        let total = maxValue + interval
         
-        
-        let xValues = Array(stride(from: 0, through: dataPoints.count, by: max(1,Int(dataPoints.count / 10)))).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
-        let yValues = Array(stride(from: 0, through: maxValue + Int(maxValue / 10), by: Int(maxValue / 10))).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
+        let xValues = Array(0.stride(through: Int(duration), by: 5)).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
+        let yValues = Array(0.stride(through: total, by: interval)).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
         
         var xLabel = "Minutes"
         var yLabel = "Steps/m"
+        var offset = 0
         
-        if offset == 1 {
+        if type == HKQuantityTypeIdentifierHeartRate {
             xLabel = "Minutes"
             yLabel = "BPM"
+            offset = 1
         }
+        
         // create axis models with axis values and axis title
         let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: xLabel, settings: labelSettings))
         let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: yLabel, settings: labelSettings))
@@ -202,18 +214,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             return ChartPointViewBar(p1: p1, p2: p2, width: barWidth, bgColor: colour.colorWithAlphaComponent(0.6))
         }
         
-        // view generator - this is a function that creates a view for each chartpoint
-//        let viewGenerator = {(chartPointModel: ChartPointLayerModel, layer: ChartPointsViewsLayer, chart: Chart) -> UIView? in
-//            let viewSize: CGFloat = Env.iPad ? 20 : 10
-//            let center = chartPointModel.screenLoc
-//            let label = UILabel(frame: CGRectMake(center.x - viewSize / 2, center.y - viewSize / 2, viewSize, viewSize))
-//            label.backgroundColor = UIColor.greenColor()
-//            label.textAlignment = NSTextAlignment.Center
-//            label.text = "\(chartPointModel.chartPoint.y.text)"
-//            label.font = ExamplesDefaults.labelFont
-//            return label
-//        }
-        
         // create layer that uses viewGenerator to display chartpoints
         let chartPointsLayer = ChartPointsViewsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: chartPoints, viewGenerator: barViewGenerator)
         
@@ -229,9 +229,55 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         )
         
         self.chartScrollView.addSubview(chart.view)
-        self.chartScrollView.contentSize = CGSizeMake(chartFrame.size.width*CGFloat(offset+1), 0)
-        self.chart = chart
-//        self.charts?.append(chart)
+        self.chartScrollView.contentSize = CGSizeMake(self.chartView.bounds.size.width*CGFloat(pageControl.numberOfPages), 0)
+//        self.chart = chart
+        chart.view.tag = offset
+        self.charts.append(chart)
+    }
+    
+//    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+//        for subview in self.chartScrollView.subviews {
+//            if let chart = subview as? ChartBaseView {
+//                chart.frame = CGRectOffset(chartView.bounds, CGFloat(chart.tag)*chartView.frame.size.width, 0)
+//            }
+//        }
+//    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+//            let oldCharts = self.charts
+            for chart in self.charts {
+                chart.clearView()
+            }
+            
+            self.charts.removeAll()
+            self.chartScrollView.subviews.forEach { $0.removeFromSuperview() }
+            
+            for chartData in self.data {
+                self.addChartView(chartData.0, type: chartData.1, duration: chartData.2)
+            }
+            
+            let offset = CGFloat(self.pageControl.currentPage) * size.width
+            self.chartScrollView.setContentOffset(CGPointMake(offset, 0), animated: true)
+            
+//            for chart in oldCharts {
+//                let frame = CGRectOffset(CGRectMake(0, 0, size.width, size.height), CGFloat(chart.view.tag)*size.width, 0)
+//                chart.clearView()
+//                let newChart = Chart(frame: frame, layers: chart.layers)
+//                newChart.view.tag = chart.view.tag
+//                self.chartScrollView.addSubview(newChart.view)
+//                self.charts.append(newChart)
+//            }
+//            
+//            self.chartScrollView.contentSize = CGSizeMake(self.chartView.bounds.size.width*CGFloat(self.pageControl.numberOfPages), 0)
+            
+        }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("rotation completed")
+        })
+        
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     }
 }
 
